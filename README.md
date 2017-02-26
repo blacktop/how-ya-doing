@@ -1,2 +1,6 @@
-# how-ya-doing
+how-ya-doing
+============
+
 Monitor your Github repos activity
+
+![screen]()

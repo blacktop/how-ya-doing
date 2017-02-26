@@ -86,19 +86,35 @@ func main() {
 	weekWidget.Height = 10
 	weekWidget.BarColor = termui.ColorBlue
 	weekWidget.BarWidth = 5
+	weekWidget.BarGap = 2
 	weekWidget.DataLabels = bclabels
 	weekWidget.TextColor = termui.ColorGreen
 	weekWidget.NumColor = termui.ColorBlack
+	weekWidget.PaddingTop = 1
+	weekWidget.PaddingLeft = 2
 	// Daily View Widget
 	dayWidget := termui.NewBarChart()
 	dayWidget.BorderLabel = "Daily Views"
 	dayWidget.Data = dayViews
 	dayWidget.Height = 10
 	dayWidget.BarColor = termui.ColorMagenta
-	dayWidget.BarWidth = 5
+	dayWidget.BarWidth = 4
+	dayWidget.BarGap = 2
 	dayWidget.DataLabels = []string{"D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18"}
 	dayWidget.TextColor = termui.ColorGreen
 	dayWidget.NumColor = termui.ColorBlack
+	// dayWidget.PaddingTop = 1
+	dayWidget.PaddingLeft = 2
+
+	// dayWidget := termui.NewLineChart()
+	// dayWidget.BorderLabel = "Daily Views"
+	// dayWidget.Data = dayViews
+	// dayWidget.Mode = "dot"
+	// dayWidget.DotStyle = '*'
+	// // dayWidget.Width = 50
+	// dayWidget.Height = 10
+	// dayWidget.AxesColor = termui.ColorWhite
+	// dayWidget.LineColor = termui.ColorGreen | termui.AttrBold
 
 	// spl3 := termui.NewSparkline()
 	// spl3.Data = dayViews
@@ -117,10 +133,10 @@ func main() {
 	// build
 	termui.Body.AddRows(
 		termui.NewRow(
-			termui.NewCol(6, 0, overviewWidget)),
+			termui.NewCol(4, 0, overviewWidget)),
 		termui.NewRow(
 			termui.NewCol(2, 0, weekWidget),
-			termui.NewCol(10, 0, dayWidget)))
+			termui.NewCol(9, 0, dayWidget)))
 
 	// calculate layout
 	termui.Body.Align()

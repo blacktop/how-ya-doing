@@ -5,11 +5,50 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/gizak/termui"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 )
+
+const (
+	owner = "maliceio"
+	repo  = "malice"
+)
+
+func getStarDateSparklineData(firstStarDate time.Time, starMap map[string]int) []int {
+
+	data := []int{}
+
+	for d := firstStarDate; d.Unix() < time.Now().Unix(); d = d.AddDate(0, 0, 1) {
+		count, exist := starMap[string(d.Format("1/2/06"))]
+		if exist {
+			data = append(data, count)
+		} else {
+			data = append(data, 0)
+		}
+	}
+	return data
+}
+
+func histogramStarDates(list []*github.Stargazer) map[string]int {
+
+	dupFrequency := make(map[string]int)
+
+	for _, item := range list {
+		// check if the item/element exist in the dupFrequency map
+		dateStr := string(item.GetStarredAt().Format("1/2/06"))
+		_, exist := dupFrequency[dateStr]
+
+		if exist {
+			dupFrequency[dateStr]++
+		} else {
+			dupFrequency[dateStr] = 1
+		}
+	}
+	return dupFrequency
+}
 
 func main() {
 
@@ -23,47 +62,65 @@ func main() {
 
 	client := github.NewClient(tc)
 
-	viewsPerDay, _, err := client.Repositories.ListTrafficViews(ctx, "maliceio", "malice", &github.TrafficBreakdownOptions{Per: "day"})
+	viewsPerDay, _, err := client.Repositories.ListTrafficViews(ctx, owner, repo, &github.TrafficBreakdownOptions{Per: "day"})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	viewsPerWeek, _, err := client.Repositories.ListTrafficViews(ctx, "maliceio", "malice", &github.TrafficBreakdownOptions{Per: "week"})
+	viewsPerWeek, _, err := client.Repositories.ListTrafficViews(ctx, owner, repo, &github.TrafficBreakdownOptions{Per: "week"})
 	if err != nil {
 		log.Fatal(err)
 	}
+	// get all star gazers
+	var allStargazer []*github.Stargazer
+	opt := &github.ListOptions{PerPage: 50}
+	for {
+		starGazers, resp, err := client.Activity.ListStargazers(ctx, owner, repo, opt)
+		if err != nil {
+			log.Fatal(err)
+		}
+		allStargazer = append(allStargazer, starGazers...)
+		if resp.NextPage == 0 {
+			break
+		}
+		opt.Page = resp.NextPage
+	}
+
+	// fmt.Println("histogramStarDates: ", histogramStarDates(allStargazer))
+	// fmt.Println("getStarDateSparklineData: ", getStarDateSparklineData(allStargazer[0].GetStarredAt().Time, histogramStarDates(allStargazer)))
+	// fmt.Println("len(getStarDateSparklineData): ", len(getStarDateSparklineData(allStargazer[0].GetStarredAt().Time, histogramStarDates(allStargazer))))
 
 	dayViews := []int{}
 	dayPlotDateLabels := []string{}
 	weekViews := []int{}
 	weekPlotDateLabels := []string{}
 
-	fmt.Println("######  How Ya Doing  #############")
-	fmt.Println()
-	fmt.Println("View Count: ", viewsPerDay.GetCount())
-	fmt.Println("Unique Views: ", viewsPerDay.GetUniques())
-	fmt.Println()
-	fmt.Println("========= Break Down by Week =======")
+	// fmt.Println("######  How Ya Doing  #############")
+	// fmt.Println()
+	// fmt.Println("View Count: ", viewsPerDay.GetCount())
+	// fmt.Println("Unique Views: ", viewsPerDay.GetUniques())
+	// fmt.Println()
+	// fmt.Println("========= Break Down by Week =======")
 	for _, tdata := range viewsPerWeek.Views {
-		fmt.Println("Week: ", tdata.GetTimestamp())
-		fmt.Println("View Count: ", tdata.GetCount())
+		// fmt.Println("Week: ", tdata.GetTimestamp())
+		// fmt.Println("View Count: ", tdata.GetCount())
 		weekViews = append(weekViews, tdata.GetUniques())
 		weekPlotDateLabels = append(weekPlotDateLabels, string(tdata.GetTimestamp().Format("1/2/06")))
-		fmt.Println("Unique Views: ", tdata.GetUniques())
-		fmt.Println("====================================")
+		// fmt.Println("Unique Views: ", tdata.GetUniques())
+		// fmt.Println("====================================")
 	}
-	fmt.Println("========= Break Down by Day =======")
+	// fmt.Println("========= Break Down by Day =======")
 	for _, tdata := range viewsPerDay.Views {
-		fmt.Println("Day: ", tdata.GetTimestamp())
-		fmt.Println("View Count: ", tdata.GetCount())
+		// 	fmt.Println("Day: ", tdata.GetTimestamp())
+		// 	fmt.Println("View Count: ", tdata.GetCount())
 		dayViews = append(dayViews, tdata.GetUniques())
 		dayPlotDateLabels = append(dayPlotDateLabels, string(tdata.GetTimestamp().Format("1/2")))
-		fmt.Println("Unique Views: ", tdata.GetUniques())
-		fmt.Println("====================================")
+		// fmt.Println("Unique Views: ", tdata.GetUniques())
+		// fmt.Println("====================================")
 	}
 
-	fmt.Println("dayViews: ", dayViews)
-	fmt.Println("weekViews: ", weekViews)
+	// fmt.Println("dayViews: ", dayViews)
+	// fmt.Println("weekViews: ", weekViews)
 
 	err = termui.Init()
 	if err != nil {
@@ -108,12 +165,29 @@ func main() {
 	dayWidget.NumColor = termui.ColorBlack
 	// dayWidget.PaddingTop = 1
 	dayWidget.PaddingLeft = 2
+	// Star Widget
+	starSparkline := termui.NewSparkline()
+	starData := getStarDateSparklineData(
+		allStargazer[0].GetStarredAt().Time,
+		histogramStarDates(allStargazer),
+	)
+	// starSparkline.Data = starData
+	starSparkline.Data = starData[len(starData)-110:]
+	starSparkline.Title = "Last 100 days"
+	starSparkline.Height = 7
+	starSparkline.LineColor = termui.ColorYellow
+
+	starWidget := termui.NewSparklines(starSparkline)
+	starWidget.Height = 10
+	starWidget.BorderLabel = "Stars"
+	starWidget.PaddingLeft = 2
 
 	// build
 	termui.Body.AddRows(
 		termui.NewRow(
 			termui.NewCol(3, 0, overviewWidget, weekWidget),
-			termui.NewCol(9, 0, dayWidget)))
+			termui.NewCol(9, 0, dayWidget)),
+		termui.NewRow(termui.NewCol(12, 0, starWidget)))
 
 	// calculate layout
 	termui.Body.Align()

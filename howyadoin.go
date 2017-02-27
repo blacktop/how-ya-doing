@@ -94,7 +94,7 @@ func main() {
 	weekWidget.TextColor = termui.ColorGreen
 	weekWidget.NumColor = termui.ColorBlack
 	weekWidget.PaddingTop = 1
-	weekWidget.PaddingLeft = 2
+	weekWidget.PaddingLeft = 5
 	// Daily View Widget
 	dayWidget := termui.NewBarChart()
 	dayWidget.BorderLabel = "Daily Unique Views"

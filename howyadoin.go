@@ -34,7 +34,9 @@ func main() {
 	}
 
 	dayViews := []int{}
+	dayPlotDateLabels := []string{}
 	weekViews := []int{}
+	weekPlotDateLabels := []string{}
 
 	fmt.Println("######  How Ya Doing  #############")
 	fmt.Println()
@@ -45,7 +47,8 @@ func main() {
 	for _, tdata := range viewsPerWeek.Views {
 		fmt.Println("Week: ", tdata.GetTimestamp())
 		fmt.Println("View Count: ", tdata.GetCount())
-		weekViews = append(weekViews, tdata.GetCount())
+		weekViews = append(weekViews, tdata.GetUniques())
+		weekPlotDateLabels = append(weekPlotDateLabels, string(tdata.GetTimestamp().Format("1/2/06")))
 		fmt.Println("Unique Views: ", tdata.GetUniques())
 		fmt.Println("====================================")
 	}
@@ -53,7 +56,8 @@ func main() {
 	for _, tdata := range viewsPerDay.Views {
 		fmt.Println("Day: ", tdata.GetTimestamp())
 		fmt.Println("View Count: ", tdata.GetCount())
-		dayViews = append(dayViews, tdata.GetCount())
+		dayViews = append(dayViews, tdata.GetUniques())
+		dayPlotDateLabels = append(dayPlotDateLabels, string(tdata.GetTimestamp().Format("1/2")))
 		fmt.Println("Unique Views: ", tdata.GetUniques())
 		fmt.Println("====================================")
 	}
@@ -80,62 +84,35 @@ func main() {
 	overviewWidget.Height = 4
 	// Weekly Views Widget
 	weekWidget := termui.NewBarChart()
-	bclabels := []string{"W0", "W1", "W2", "W3"}
-	weekWidget.BorderLabel = "Weekly Views"
+	weekWidget.BorderLabel = "Weekly Unique Views"
 	weekWidget.Data = weekViews
 	weekWidget.Height = 10
 	weekWidget.BarColor = termui.ColorBlue
-	weekWidget.BarWidth = 5
+	weekWidget.BarWidth = 7
 	weekWidget.BarGap = 2
-	weekWidget.DataLabels = bclabels
+	weekWidget.DataLabels = weekPlotDateLabels
 	weekWidget.TextColor = termui.ColorGreen
 	weekWidget.NumColor = termui.ColorBlack
 	weekWidget.PaddingTop = 1
 	weekWidget.PaddingLeft = 2
 	// Daily View Widget
 	dayWidget := termui.NewBarChart()
-	dayWidget.BorderLabel = "Daily Views"
+	dayWidget.BorderLabel = "Daily Unique Views"
 	dayWidget.Data = dayViews
-	dayWidget.Height = 10
+	dayWidget.Height = 14
 	dayWidget.BarColor = termui.ColorMagenta
 	dayWidget.BarWidth = 4
 	dayWidget.BarGap = 2
-	dayWidget.DataLabels = []string{"D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18"}
+	dayWidget.DataLabels = dayPlotDateLabels
 	dayWidget.TextColor = termui.ColorGreen
 	dayWidget.NumColor = termui.ColorBlack
 	// dayWidget.PaddingTop = 1
 	dayWidget.PaddingLeft = 2
 
-	// dayWidget := termui.NewLineChart()
-	// dayWidget.BorderLabel = "Daily Views"
-	// dayWidget.Data = dayViews
-	// dayWidget.Mode = "dot"
-	// dayWidget.DotStyle = '*'
-	// // dayWidget.Width = 50
-	// dayWidget.Height = 10
-	// dayWidget.AxesColor = termui.ColorWhite
-	// dayWidget.LineColor = termui.ColorGreen | termui.AttrBold
-
-	// spl3 := termui.NewSparkline()
-	// spl3.Data = dayViews
-	// spl3.Title = "Enlarged Sparkline"
-	// spl3.Height = 7
-	// spl3.
-	// spl3.LineColor = termui.ColorYellow
-	//
-	// spls2 := termui.NewSparklines(spl3)
-	// spls2.Height = 10
-	// // spls2.Width = 30
-	// spls2.BorderFg = termui.ColorCyan
-	// // spls2.X = 21
-	// spls2.BorderLabel = "Daily View"
-
 	// build
 	termui.Body.AddRows(
 		termui.NewRow(
-			termui.NewCol(4, 0, overviewWidget)),
-		termui.NewRow(
-			termui.NewCol(2, 0, weekWidget),
+			termui.NewCol(3, 0, overviewWidget, weekWidget),
 			termui.NewCol(9, 0, dayWidget)))
 
 	// calculate layout
@@ -144,6 +121,9 @@ func main() {
 	termui.Render(termui.Body)
 
 	termui.Handle("/sys/kbd/q", func(termui.Event) {
+		termui.StopLoop()
+	})
+	termui.Handle("/sys/kbd/C-c", func(termui.Event) {
 		termui.StopLoop()
 	})
 	termui.Loop()

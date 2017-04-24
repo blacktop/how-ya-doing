@@ -4,9 +4,9 @@ install:
   - make setup
 script:
   - make test
-  - test -n "$TRAVIS_TAG" || go run howyadoin.go
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-  - test -n "$TRAVIS_TAG" && go run howyadoin.go
+  # - test -n "$TRAVIS_TAG" || go run howyadoin.go
+# after_success:
+#   - bash <(curl -s https://codecov.io/bash)
+#   - test -n "$TRAVIS_TAG" && go run howyadoin.go
 notifications:
   email: false

@@ -1,7 +1,7 @@
 how-ya-doing
 ============
 
-[![License](https://img.shields.io/badge/licence-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/licence-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![Build Status](https://travis-ci.org/blacktop/how-ya-doing.svg?branch=master)](https://travis-ci.org/blacktop/how-ya-doing)
 
 Monitor your Github repos activity
 

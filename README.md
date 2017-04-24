@@ -18,6 +18,8 @@ Next export a `GITHUB_ACCESS_TOKEN` environment variable with the `repo` scope s
 $ export GITHUB_ACCESS_TOKEN=`YOUR_TOKEN`
 ```
 
+Now let's check on one of your repos so we can see ... **how-ya-doing**
+
 ```console
 $ hyd maliceio/malice
 ```

@@ -1,4 +1,10 @@
-memo = "e652e26028eab478d780ae33630f8bad4f2ad74997f1d07d3ac44dbfef7a4211"
+memo = "8f35b1961f615fe0ce7d8f3f18ed071641c8afccdfdfef60d5df8c1fedf42590"
+
+[[projects]]
+  name = "github.com/Sirupsen/logrus"
+  packages = ["."]
+  revision = "ba1b36c82c5e05c4f912a88eab0dcd91a171688f"
+  version = "v0.11.5"
 
 [[projects]]
   branch = "master"
@@ -59,6 +65,12 @@ memo = "e652e26028eab478d780ae33630f8bad4f2ad74997f1d07d3ac44dbfef7a4211"
   name = "golang.org/x/oauth2"
   packages = [".","internal"]
   revision = "b9780ec78894ab900c062d58ee3076cd9b2a4501"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "ea9bcade75cb975a0b9738936568ab388b845617"
 
 [[projects]]
   name = "google.golang.org/appengine"

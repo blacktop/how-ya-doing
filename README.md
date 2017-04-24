@@ -19,7 +19,7 @@ $ export GITHUB_ACCESS_TOKEN=`YOUR_TOKEN`
 ```
 
 ```console
-$ hyd
+$ hyd maliceio/malice
 ```
 
 ![screen](https://github.com/blacktop/how-ya-doing/raw/master/screen-shot.png)
@@ -29,5 +29,4 @@ $ hyd
 TODO
 ----
 
--	[ ] add config for which repos to show
 -	[ ] add database for history beyond what Github gives (2 weeks)

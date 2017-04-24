@@ -3,18 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
+	"strings"
 	"time"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/gizak/termui"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
-)
-
-const (
-	owner = "maliceio"
-	repo  = "malice"
 )
 
 func getStarDateSparklineData(firstStarDate time.Time, starMap map[string]int) []int {
@@ -53,6 +49,20 @@ func histogramStarDates(list []*github.Stargazer) map[string]int {
 func main() {
 
 	var err error
+	var owner, repo string
+
+	if len(os.Args) < 2 {
+		log.Fatal(fmt.Errorf("please supply a repo in the format: owner/repo"))
+	}
+
+	repoParts := strings.Split(os.Args[1], "/")
+
+	if len(repoParts) < 2 {
+		log.Fatal(fmt.Errorf("please supply a repo in the format: owner/repo"))
+	}
+
+	owner = repoParts[0]
+	repo = repoParts[1]
 
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(

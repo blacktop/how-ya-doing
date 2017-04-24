@@ -5,20 +5,24 @@ how-ya-doing
 
 Monitor your Github repos activity
 
-![screen](https://github.com/blacktop/how-ya-doing/raw/master/screen-shot.png)
+Install
+-------
 
-> To quit press `Ctrl+c` or just `q`
+```bash
+$ brew install blacktop/tap/hyd
+```
 
 Getting Started
 ---------------
 
 ```bash
-$ go get github.com/blacktop/how-ya-doing
-$ cd $GOPATH/src/github.com/blacktop/how-ya-doing
-$
 $ export GITHUB_ACCESS_TOKEN=<GITHUB_ACCESS_TOKEN>
-$ go build
+$ hyd
 ```
+
+![screen](https://github.com/blacktop/how-ya-doing/raw/master/screen-shot.png)
+
+> To quit press `Ctrl+c` or just `q`
 
 TODO
 ----

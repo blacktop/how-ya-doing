@@ -9,6 +9,17 @@ Monitor your Github repos activity
 
 > To quit press `Ctrl+c` or just `q`
 
+Getting Started
+---------------
+
+```bash
+$ go get github.com/blacktop/how-ya-doing
+$ cd $GOPATH/src/github.com/blacktop/how-ya-doing
+$
+$ export GITHUB_ACCESS_TOKEN=<GITHUB_ACCESS_TOKEN>
+$ go build
+```
+
 TODO
 ----
 

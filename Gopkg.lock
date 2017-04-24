@@ -1,0 +1,67 @@
+memo = "e652e26028eab478d780ae33630f8bad4f2ad74997f1d07d3ac44dbfef7a4211"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gizak/termui"
+  packages = ["."]
+  revision = "991cd3d3809135dc24daf6188dc6edcaf3d7d2d9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  revision = "2bba0603135d7d7f5cb73b2125beeda19c09f4ef"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-github"
+  packages = ["github"]
+  revision = "9be6ce168fa69a3cc2db27a776950a42d18c2ae0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/maruel/panicparse"
+  packages = ["stack"]
+  revision = "ad661195ed0e88491e0f14be6613304e3b1141d6"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/mattn/go-runewidth"
+  packages = ["."]
+  revision = "737072b4e32b7a5018b4a7125da8d12de90e8045"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/mitchellh/go-wordwrap"
+  packages = ["."]
+  revision = "ad45545899c7b13c020ea92b2072220eefad42b8"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/nsf/termbox-go"
+  packages = ["."]
+  revision = "3540b76b9c77679aeffd0a47e00243fb0ce47133"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "5602c733f70afc6dcec6766be0d5034d4c4f14de"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/oauth2"
+  packages = [".","internal"]
+  revision = "b9780ec78894ab900c062d58ee3076cd9b2a4501"
+
+[[projects]]
+  name = "google.golang.org/appengine"
+  packages = ["internal","internal/base","internal/datastore","internal/log","internal/remote_api","internal/urlfetch","urlfetch"]
+  revision = "150dc57a1b433e64154302bdc40b6bb8aefa313a"
+  version = "v1.0.0"

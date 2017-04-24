@@ -12,7 +12,7 @@ Getting Started
 $ brew install blacktop/tap/hyd
 ```
 
-Next export a `GITHUB_TOKEN` environment variable with the `repo` scope selected. This will be used to deploy releases to your GitHub repository. Create yours [here](https://github.com/settings/tokens/new).
+Next export a `GITHUB_ACCESS_TOKEN` environment variable with the `repo` scope selected. This will be used to OAuth to the Github API. Create yours [here](https://github.com/settings/tokens/new).
 
 ```console
 $ export GITHUB_ACCESS_TOKEN=`YOUR_TOKEN`

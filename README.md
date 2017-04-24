@@ -29,4 +29,4 @@ $ hyd maliceio/malice
 TODO
 ----
 
--	[ ] add database for history beyond what Github gives (2 weeks)
+-	[ ] add [database](https://github.com/boltdb/bolt) for history beyond what Github gives (2 weeks)

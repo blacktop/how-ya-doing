@@ -5,18 +5,20 @@ how-ya-doing
 
 Monitor your Github repos activity
 
-Install
--------
+Getting Started
+---------------
 
 ```bash
 $ brew install blacktop/tap/hyd
 ```
 
-Getting Started
----------------
+Next export a `GITHUB_TOKEN` environment variable with the `repo` scope selected. This will be used to deploy releases to your GitHub repository. Create yours [here](https://github.com/settings/tokens/new).
 
-```bash
-$ export GITHUB_ACCESS_TOKEN=<GITHUB_ACCESS_TOKEN>
+```console
+$ export GITHUB_ACCESS_TOKEN=`YOUR_TOKEN`
+```
+
+```console
 $ hyd
 ```
 
